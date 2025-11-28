@@ -10,12 +10,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Ambil 6 barang lelang terbaru yang statusnya 'open'
-        $items = Item::where('status', 'open')->latest()->take(6)->get();
-
-        // Ambil 3 berita terbaru
+        // Ambil 8 Barang Terbaru
+        $auctions = Item::where('status', 'open')->with('user')->latest()->take(8)->get();
+        
+        // Ambil 3 Berita Terbaru
         $news = News::latest()->take(3)->get();
 
-        return view('welcome', compact('items', 'news'));
+        return view('welcome', compact('auctions', 'news'));
     }
 }

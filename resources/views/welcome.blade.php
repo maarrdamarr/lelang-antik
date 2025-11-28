@@ -1,210 +1,309 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lelang Antik - Premium Auction</title>
+    <title>Lelang Antik - Royal Auction House</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=montserrat:400,600,700,800|open-sans:400,600&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        /* Gaya Muvid biasanya menggunakan Font Sans-Serif yang tegas */
-        .font-heading { font-family: 'Montserrat', sans-serif; }
-        .font-body { font-family: 'Open Sans', sans-serif; }
+        /* Custom Fonts */
+        .font-royal { font-family: 'Cinzel', serif; }
+        .font-body { font-family: 'Lato', sans-serif; }
         
-        /* Warna Khas Dark Theme Muvid */
-        .bg-muvid-dark { background-color: #0b0c2a; }
-        .bg-muvid-card { background-color: #1a1c4b; }
-        .text-muvid-accent { color: #e50914; /* Merah Netflix/Muvid */ }
-        .bg-muvid-accent { background-color: #e50914; }
-        .border-muvid-accent { border-color: #e50914; }
+        /* Custom Colors */
+        .bg-emerald-royal { background-color: #064e3b; } /* Hijau Tua Mewah */
+        .text-emerald-royal { color: #064e3b; }
+        .bg-cream { background-color: #fdfbf7; } /* Krem hangat pengganti putih */
+        .text-gold { color: #d97706; } /* Emas */
+        .bg-gold { background-color: #d97706; }
+        .border-gold { border-color: #d97706; }
+        
+        /* Gradient Text */
+        .text-gradient-gold {
+            background: linear-gradient(to right, #b45309, #d97706, #fcd34d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Card Hover Effect */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
     </style>
 </head>
-<body class="font-body bg-muvid-dark text-gray-200 antialiased selection:bg-red-500 selection:text-white">
+<body class="font-body bg-cream text-gray-800 antialiased">
 
-    <nav class="fixed w-full z-50 top-0 start-0 border-b border-gray-800 bg-muvid-dark/90 backdrop-blur-md transition-all duration-300">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="/" class="flex items-center space-x-2 rtl:space-x-reverse group">
-                <i class="fas fa-gavel text-2xl text-red-600 group-hover:rotate-12 transition"></i>
-                <span class="self-center text-2xl font-heading font-extrabold whitespace-nowrap text-white">LELANG<span class="text-red-600">ANTIK</span></span>
-            </a>
-            
-            <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                @if (Route::has('login'))
-                    <div class="flex items-center gap-4">
-                        @auth
-                            <a href="{{ url('/dashboard') }}" class="text-white hover:text-red-500 font-bold transition text-sm uppercase tracking-wider">Dashboard</a>
-                        @else
-                            <a href="{{ route('login') }}" class="text-white hover:text-red-500 font-bold transition text-sm uppercase tracking-wider hidden sm:block">Log in</a>
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-900 font-medium rounded-full text-sm px-6 py-2 text-center transition shadow-lg shadow-red-600/30">
-                                    Join Now
-                                </a>
-                            @endif
-                        @endauth
+    <nav class="fixed w-full z-50 bg-emerald-royal shadow-lg border-b border-yellow-600/30">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <div class="bg-white p-2 rounded-full">
+                        <i class="fas fa-gavel text-emerald-royal text-xl"></i>
                     </div>
-                @endif
+                    <a href="/" class="font-royal font-bold text-2xl text-white tracking-widest">
+                        ROYAL<span class="text-yellow-400">BID.</span>
+                    </a>
+                </div>
+
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="text-gray-200 hover:text-yellow-400 font-bold transition uppercase text-xs tracking-wider">Beranda</a>
+                    <a href="#collection" class="text-gray-200 hover:text-yellow-400 font-bold transition uppercase text-xs tracking-wider">Koleksi</a>
+                    <a href="#about" class="text-gray-200 hover:text-yellow-400 font-bold transition uppercase text-xs tracking-wider">Tentang Kami</a>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="px-6 py-2 bg-yellow-500 text-emerald-900 rounded-full font-bold text-sm hover:bg-yellow-400 transition shadow-lg shadow-yellow-500/20">
+                            Dashboard
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}" class="text-white hover:text-yellow-400 font-bold text-sm hidden sm:block">Log in</a>
+                        <a href="{{ route('register') }}" class="px-6 py-2 border-2 border-yellow-500 text-yellow-500 rounded-full font-bold text-sm hover:bg-yellow-500 hover:text-emerald-900 transition">
+                            Daftar Sekarang
+                        </a>
+                    @endauth
+                </div>
             </div>
         </div>
     </nav>
 
-    <section class="relative h-screen min-h-[600px] flex items-center justify-start overflow-hidden">
+    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1459745930869-b3d0d72c3cbb?q=80&w=1920&auto=format&fit=crop" 
-                 alt="Hero Background" 
-                 class="w-full h-full object-cover object-center opacity-40 scale-105 animate-[pulse_10s_infinite]">
-            <div class="absolute inset-0 bg-gradient-to-r from-[#0b0c2a] via-[#0b0c2a]/80 to-transparent"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-[#0b0c2a] via-transparent to-transparent"></div>
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop" 
+                 class="w-full h-full object-cover" alt="Luxury Interior">
+            <div class="absolute inset-0 bg-emerald-900/80 mix-blend-multiply"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-emerald-900 via-transparent to-transparent"></div>
         </div>
 
-        <div class="relative z-10 px-4 max-w-screen-xl mx-auto w-full pt-20">
-            <div class="max-w-2xl">
-                <span class="inline-block py-1 px-3 rounded bg-red-600/20 border border-red-600 text-red-500 text-xs font-bold tracking-widest uppercase mb-4">
-                    Exclusive Auction
-                </span>
-                <h1 class="mb-6 text-5xl md:text-7xl font-heading font-extrabold text-white leading-tight">
-                    History in <br> Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-purple-600">Hands</span>
-                </h1>
-                <p class="mb-8 text-lg text-gray-400 leading-relaxed">
-                    Temukan koleksi barang antik paling langka, mulai dari jam kuno, keramik dinasti, hingga lukisan bersejarah. Tawar sekarang sebelum hilang selamanya.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#items" class="inline-flex justify-center items-center py-4 px-8 text-base font-bold text-white rounded-full bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-900 transition shadow-lg shadow-red-600/40">
-                        <i class="fas fa-play mr-2 text-xs"></i> Mulai Menawar
-                    </a>
-                    <a href="#news" class="inline-flex justify-center items-center py-4 px-8 text-base font-bold text-white rounded-full border border-gray-600 hover:bg-white/10 transition">
-                        Baca Jurnal
-                    </a>
-                </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center">
+            <div class="inline-block mb-4 px-4 py-1 rounded-full border border-yellow-500/50 bg-emerald-900/50 backdrop-blur-sm">
+                <span class="text-yellow-400 text-xs font-bold tracking-[0.2em] uppercase">Est. 2025 • Premium Auction House</span>
             </div>
-        </div>
-    </section>
-
-    <section id="items" class="py-20 relative">
-        <div class="max-w-screen-xl mx-auto px-4">
-            <div class="flex justify-between items-end mb-10 border-b border-gray-800 pb-4">
-                <div>
-                    <h2 class="text-3xl md:text-4xl font-heading font-bold text-white">Live <span class="text-red-600">Auctions</span></h2>
-                    <p class="mt-2 text-gray-500 text-sm uppercase tracking-widest">Sedang berlangsung</p>
-                </div>
-                <a href="{{ route('login') }}" class="text-sm font-bold text-gray-400 hover:text-white transition flex items-center gap-2">
-                    VIEW ALL <i class="fas fa-arrow-right"></i>
+            
+            <h1 class="font-royal text-5xl md:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
+                Temukan Keindahan <br>
+                <span class="text-gradient-gold">Barang Antik & Seni</span>
+            </h1>
+            
+            <p class="text-gray-200 text-lg md:text-xl mb-10 leading-relaxed max-w-2xl mx-auto font-light">
+                Platform lelang eksklusif untuk kolektor sejati. Kami menghadirkan sejarah, seni, dan kemewahan langsung ke tangan Anda dengan sistem penawaran yang aman.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#collection" class="px-8 py-4 bg-yellow-500 text-emerald-900 rounded-full font-bold text-lg hover:bg-yellow-400 transition shadow-xl hover:shadow-yellow-500/30 transform hover:-translate-y-1">
+                    Mulai Menawar <i class="fas fa-gavel ml-2"></i>
+                </a>
+                <a href="#about" class="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/30 text-white rounded-full font-bold text-lg hover:bg-white/20 transition">
+                    Pelajari Cara Kerja
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                @forelse($items as $item)
-                <div class="group relative bg-muvid-card rounded-xl overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-red-900/20">
-                    <div class="relative aspect-[2/3] overflow-hidden">
-                        @if($item->image)
-                            <img src="{{ asset('storage/' . $item->image) }}" class="w-full h-full object-cover transition duration-500 group-hover:scale-110 group-hover:opacity-75">
-                        @else
-                            <img src="https://images.unsplash.com/photo-1599691652197-76790937a092?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover transition duration-500 group-hover:scale-110 group-hover:opacity-75">
-                        @endif
-                        
-                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 z-10">
-                            <a href="{{ route('login') }}" class="bg-red-600 text-white rounded-full p-4 shadow-lg transform scale-0 group-hover:scale-100 transition duration-300 hover:bg-red-700">
-                                <i class="fas fa-gavel text-xl"></i>
-                            </a>
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0b0c2a] to-transparent opacity-80"></div>
-                        
-                        <div class="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md">
-                            OPEN
-                        </div>
-                    </div>
-
-                    <div class="p-4 absolute bottom-0 w-full">
-                        <h3 class="text-lg font-heading font-bold text-white mb-1 truncate group-hover:text-red-500 transition">{{ $item->name }}</h3>
-                        <div class="flex justify-between items-center text-sm text-gray-400">
-                            <span>Start Price:</span>
-                            <span class="text-white font-bold">Rp {{ number_format($item->start_price) }}</span>
-                        </div>
-                    </div>
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto border-t border-white/10 pt-8">
+                <div>
+                    <p class="text-3xl font-royal text-yellow-400 font-bold">1k+</p>
+                    <p class="text-gray-400 text-sm uppercase tracking-wider">Barang Terjual</p>
                 </div>
-                @empty
-                @for($i=0; $i<4; $i++)
-                <div class="group relative bg-muvid-card rounded-xl overflow-hidden opacity-50">
-                    <div class="aspect-[2/3] bg-gray-800 flex items-center justify-center">
-                        <i class="fas fa-box-open text-4xl text-gray-600"></i>
-                    </div>
+                <div>
+                    <p class="text-3xl font-royal text-yellow-400 font-bold">500+</p>
+                    <p class="text-gray-400 text-sm uppercase tracking-wider">Penjual Aktif</p>
                 </div>
-                @endfor
-                @endforelse
+                <div>
+                    <p class="text-3xl font-royal text-yellow-400 font-bold">100%</p>
+                    <p class="text-gray-400 text-sm uppercase tracking-wider">Terverifikasi</p>
+                </div>
+                <div>
+                    <p class="text-3xl font-royal text-yellow-400 font-bold">24/7</p>
+                    <p class="text-gray-400 text-sm uppercase tracking-wider">Support</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="news" class="py-20 bg-[#0f1035]">
-        <div class="max-w-screen-xl mx-auto px-4">
-             <div class="flex justify-between items-end mb-10 border-b border-gray-800 pb-4">
-                <div>
-                    <h2 class="text-3xl md:text-4xl font-heading font-bold text-white">Latest <span class="text-blue-500">News</span></h2>
-                    <p class="mt-2 text-gray-500 text-sm uppercase tracking-widest">Berita & Edukasi</p>
+    <section class="py-16 bg-white relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-cream p-8 rounded-2xl border border-yellow-100 hover:border-yellow-400 transition group hover-lift">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-emerald-500 transition">
+                        <i class="fas fa-shield-alt text-emerald-600 text-2xl group-hover:text-white transition"></i>
+                    </div>
+                    <h3 class="font-royal text-xl font-bold text-emerald-900 mb-3">Keaslian Terjamin</h3>
+                    <p class="text-gray-600">Setiap barang dikurasi oleh ahli untuk memastikan nilai sejarah dan keasliannya.</p>
+                </div>
+                <div class="bg-cream p-8 rounded-2xl border border-yellow-100 hover:border-yellow-400 transition group hover-lift">
+                    <div class="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-yellow-500 transition">
+                        <i class="fas fa-gavel text-yellow-600 text-2xl group-hover:text-white transition"></i>
+                    </div>
+                    <h3 class="font-royal text-xl font-bold text-emerald-900 mb-3">Sistem Fair Play</h3>
+                    <p class="text-gray-600">Mekanisme lelang yang transparan dan aman bagi penjual maupun pembeli.</p>
+                </div>
+                <div class="bg-cream p-8 rounded-2xl border border-yellow-100 hover:border-yellow-400 transition group hover-lift">
+                    <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-blue-500 transition">
+                        <i class="fas fa-shipping-fast text-blue-600 text-2xl group-hover:text-white transition"></i>
+                    </div>
+                    <h3 class="font-royal text-xl font-bold text-emerald-900 mb-3">Pengiriman Aman</h3>
+                    <p class="text-gray-600">Kami bekerja sama dengan logistik khusus barang seni dan antik berasuransi.</p>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                @foreach($news as $article)
-                <div class="bg-muvid-card rounded-xl overflow-hidden shadow-lg group hover:shadow-blue-900/20 transition">
-                    <div class="relative h-48 overflow-hidden">
-                        @if($article->image)
-                             <img src="{{ asset('storage/' . $article->image) }}" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+    <section id="collection" class="py-24 bg-cream relative">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-emerald-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div>
+                    <span class="text-yellow-600 font-bold uppercase tracking-widest text-sm">Sedang Berlangsung</span>
+                    <h2 class="font-royal text-4xl font-bold text-emerald-900 mt-2">Koleksi Lelang Eksklusif</h2>
+                </div>
+                <a href="{{ route('login') }}" class="hidden md:inline-flex items-center text-emerald-700 font-bold hover:text-yellow-600 transition">
+                    Lihat Semua Barang <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                @forelse($auctions as $item)
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover-lift group flex flex-col h-full">
+                    <div class="relative h-64 overflow-hidden">
+                        @if($item->image)
+                            <img src="{{ asset('storage/' . $item->image) }}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
                         @else
-                             <img src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                            <img src="https://source.unsplash.com/random/400x400/?antique" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
                         @endif
-                        <div class="absolute top-0 left-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-br-lg">
-                            NEWS
+                        
+                        <div class="absolute top-3 left-3 flex gap-2">
+                            <span class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md uppercase">
+                                Live
+                            </span>
+                        </div>
+
+                        <div class="absolute bottom-3 right-3 bg-white/95 backdrop-blur px-4 py-2 rounded-lg shadow-lg border-l-4 border-yellow-500">
+                            <p class="text-xs text-gray-500 uppercase font-bold">Harga Saat Ini</p>
+                            <p class="text-emerald-800 font-bold text-lg">Rp {{ number_format($item->start_price) }}</p>
                         </div>
                     </div>
-                    <div class="p-6">
-                        <div class="flex items-center gap-2 text-xs text-gray-500 mb-3">
-                            <i class="far fa-calendar-alt"></i> {{ $article->created_at->format('d M Y') }}
+
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="flex items-center gap-2 mb-3">
+                             @if($item->user->avatar)
+                                <img src="{{ asset('storage/' . $item->user->avatar) }}" class="w-8 h-8 rounded-full border border-gray-200">
+                            @else
+                                <img src="https://ui-avatars.com/api/?name={{ urlencode($item->user->name) }}&background=random" class="w-8 h-8 rounded-full border border-gray-200">
+                            @endif
+                            <span class="text-xs font-bold text-gray-500 uppercase">{{ $item->user->name }}</span>
                         </div>
-                        <h3 class="text-xl font-heading font-bold text-white mb-3 leading-snug group-hover:text-blue-500 transition">
-                            {{ $article->title }}
+
+                        <h3 class="font-royal text-xl font-bold text-gray-800 mb-2 leading-tight group-hover:text-yellow-600 transition">
+                            <a href="{{ route('bidder.auction.show', $item->id) }}">{{ $item->name }}</a>
                         </h3>
-                        <p class="text-gray-400 text-sm line-clamp-2">
-                            {{ Str::limit($article->content, 100) }}
-                        </p>
-                        <a href="#" class="inline-block mt-4 text-sm font-bold text-blue-500 hover:text-blue-400">
-                            Read More <i class="fas fa-angle-right ml-1"></i>
+                        
+                        <p class="text-gray-500 text-sm line-clamp-2 mb-4 flex-grow">{{ $item->description }}</p>
+
+                        <a href="{{ route('bidder.auction.show', $item->id) }}" class="w-full block text-center bg-emerald-900 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition shadow-lg">
+                            Tawar Sekarang
                         </a>
                     </div>
                 </div>
-                @endforeach
+                @empty
+                    <div class="col-span-full text-center py-20 bg-white rounded-3xl shadow-inner border border-dashed border-gray-300">
+                        <i class="fas fa-box-open text-gray-300 text-6xl mb-4"></i>
+                        <p class="text-gray-500 text-lg font-royal">Belum ada barang lelang yang tersedia.</p>
+                    </div>
+                @endforelse
+            </div>
+
+            <div class="text-center mt-12 md:hidden">
+                <a href="{{ route('login') }}" class="inline-block px-8 py-3 bg-white border border-gray-200 rounded-full font-bold text-emerald-900 shadow-sm">
+                    Lihat Semua Barang
+                </a>
             </div>
         </div>
     </section>
 
-    <footer class="bg-[#050614] text-white py-16 border-t border-gray-900">
-        <div class="max-w-screen-xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-8 md:mb-0">
-                    <span class="text-2xl font-heading font-extrabold text-white">LELANG<span class="text-red-600">ANTIK</span></span>
-                    <p class="text-gray-500 text-sm mt-2 max-w-xs">
-                        The world's premier marketplace for rare antiques and collectibles.
+    <section class="py-20 bg-emerald-royal relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: url('https://www.transparenttextures.com/patterns/cubes.png');"></div>
+        
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <h2 class="font-royal text-4xl md:text-5xl font-bold text-white mb-6">Punya Barang Antik Bernilai Tinggi?</h2>
+            <p class="text-emerald-100 text-lg mb-10 leading-relaxed">
+                Bergabunglah dengan ribuan penjual lainnya. Kami bantu Anda menemukan pembeli yang menghargai nilai sejarah barang Anda dengan harga terbaik.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{{ route('register') }}" class="px-10 py-4 bg-yellow-500 text-emerald-900 rounded-full font-bold text-lg hover:bg-yellow-400 transition shadow-xl hover:shadow-yellow-500/50">
+                    Daftar Sebagai Penjual
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-16 border-t-4 border-yellow-600">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="bg-yellow-500 p-2 rounded-full text-emerald-900">
+                            <i class="fas fa-gavel text-xl"></i>
+                        </div>
+                        <span class="font-royal font-bold text-2xl tracking-widest">ROYAL<span class="text-yellow-500">BID.</span></span>
+                    </div>
+                    <p class="text-gray-400 max-w-sm leading-relaxed mb-6">
+                        Marketplace lelang terpercaya sejak 2025. Menghubungkan kolektor dengan barang-barang bersejarah yang memiliki nilai seni tinggi.
                     </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-yellow-500 hover:text-emerald-900 transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-yellow-500 hover:text-emerald-900 transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-yellow-500 hover:text-emerald-900 transition"><i class="fab fa-twitter"></i></a>
+                    </div>
                 </div>
-                <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-white text-xl transition"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white text-xl transition"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white text-xl transition"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white text-xl transition"><i class="fab fa-youtube"></i></a>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6 font-royal text-yellow-500">Tautan Cepat</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#home" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-yellow-500"></i> Beranda</a></li>
+                        <li><a href="#collection" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-yellow-500"></i> Koleksi</a></li>
+                        <li><a href="{{ route('login') }}" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-yellow-500"></i> Login</a></li>
+                        <li><a href="{{ route('register') }}" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-yellow-500"></i> Daftar</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold mb-6 font-royal text-yellow-500">Hubungi Kami</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-yellow-500"></i>
+                            <span>Menara Heritage Lt. 12,<br>Jakarta Selatan, Indonesia</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-yellow-500"></i>
+                            <span>vip@lelangantik.com</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone text-yellow-500"></i>
+                            <span>+62 812-3456-7890</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <div class="border-t border-gray-900 mt-10 pt-8 text-center text-gray-600 text-sm">
-                &copy; 2025 Lelang Antik. Designed with <i class="fas fa-heart text-red-600"></i> by Laragon/Laravel.
+            <div class="border-t border-gray-800 mt-16 pt-8 text-center text-gray-500 text-sm">
+                &copy; 2025 Royal Bid Indonesia. All rights reserved.
             </div>
         </div>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
     @include('components.live-chat-widget')
 
 </body>
