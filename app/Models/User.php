@@ -62,4 +62,9 @@ class User extends Authenticatable
     }
     public function comments() { return $this->hasMany(Comment::class); }
 public function topups() { return $this->hasMany(Topup::class); }
+// Relasi ke SupportMessage (Chat Customer Service)
+    public function supportMessages()
+    {
+        return $this->hasMany(SupportMessage::class);
+    }
 }
