@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 // Halaman Depan (Bisa diakses siapa saja)
 // Halaman Depan
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/news/{news}', [\App\Http\Controllers\HomeController::class, 'showNews'])->name('news.show');
 
 // Redirect Dashboard sesuai Role
 Route::get('/dashboard', function () {

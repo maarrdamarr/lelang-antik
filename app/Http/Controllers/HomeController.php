@@ -18,4 +18,9 @@ class HomeController extends Controller
 
         return view('welcome', compact('auctions', 'news'));
     }
+
+    public function showNews(News $news)
+    {
+        return view('news.show', compact('news'));
+    }
 }

@@ -263,6 +263,54 @@
         </div>
     </section>
 
+    <section id="news" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-yellow-600 font-bold uppercase tracking-[0.2em] text-xs">Wawasan & Berita</span>
+                <h2 class="font-serif-display text-4xl font-normal text-emerald-950 mt-3">Kabar Terbaru dari Royal Bid</h2>
+                <div class="w-24 h-1 bg-yellow-500 mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @forelse($news as $index => $newsItem)
+                <div class="auction-card bg-stone-50 rounded-xl overflow-hidden shadow-sm hover:shadow-2xl group flex flex-col h-full border border-stone-100"
+                     data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
+
+                    <div class="relative aspect-[16/10] overflow-hidden bg-gray-100">
+                        @if($newsItem->image)
+                            <img src="{{ asset('storage/' . $newsItem->image) }}" class="w-full h-full object-cover">
+                        @else
+                            <img src="https://source.unsplash.com/random/800x600/?news,article,vintage" class="w-full h-full object-cover">
+                        @endif
+                    </div>
+
+                    <div class="p-6 flex flex-col flex-grow">
+                        <span class="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-3">{{ $newsItem->created_at->format('d F Y') }}</span>
+
+                        <h3 class="font-serif-display text-xl text-gray-900 mb-4 leading-snug group-hover:text-yellow-600 transition-colors">
+                            <a href="{{ route('news.show', $newsItem) }}" class="line-clamp-2">{{ $newsItem->title }}</a>
+                        </h3>
+
+                        <p class="text-gray-500 text-sm font-light line-clamp-3 mb-6 flex-grow leading-relaxed">{{ $newsItem->content }}</p>
+
+                        <a href="{{ route('news.show', $newsItem) }}" class="w-full block text-center py-3 border border-emerald-900 text-emerald-900 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-emerald-900 hover:text-white transition-all duration-300">
+                            Baca Selengkapnya
+                        </a>
+                    </div>
+                </div>
+                @empty
+                    <div class="col-span-full py-24 text-center">
+                        <div class="inline-block p-6 rounded-full bg-stone-100 mb-4">
+                            <i class="fas fa-newspaper text-stone-300 text-4xl"></i>
+                        </div>
+                        <h3 class="font-serif-display text-xl text-gray-500">Belum ada berita yang dipublikasikan.</h3>
+                        <p class="text-gray-400 mt-2">Nantikan pembaruan dan wawasan dari kami.</p>
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
     <section class="py-24 bg-emerald-950 relative overflow-hidden flex items-center">
         <div class="absolute top-0 right-0 w-96 h-96 bg-yellow-600/20 rounded-full blur-[100px]"></div>
         <div class="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-[100px]"></div>
